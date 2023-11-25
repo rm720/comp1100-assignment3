@@ -1,7 +1,7 @@
 {-|
 Module      : AI
 Description : The AI for Othello
-Copyright   : (c) Robert 'Probie' Offner, <Ra>, 2018
+Copyright   : (c) Robert 'Probie' Offner; Ratmir 'Ra' Mugattarov 2018
 License     : GPL-3
 -}
 module AI where
