@@ -26,7 +26,7 @@ Table of Contents
 ## Running and Installation instructions
 ```sh
 curl -sSL https://get.haskellstack.org/ | sh    
-echo 'export PATH="$PATH:/path-to-stack"' >> ~/.zshrc  
+echo "export PATH=\"\$PATH:$(which stack)\"" >> ~/.zshrc
 source ~/.zshrc
 stack setup   
 stack init     
