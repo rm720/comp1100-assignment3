@@ -42,7 +42,7 @@ attempt to do this assignment without being able to do these things, you'll
 just end up wasting your time and becoming frustrated.
 
 For this assignment, GHC is set to be a bit more pedantic than the previous
-two assignments. It will treat all warning as errors, and you'll only be able
+two assignments. It will treat all warnings as errors, and you'll only be able
 to write "Safe" Haskell. Assuming that you're writing good code, you shouldn't
 notice this at all, apart from that if you try to use `trace` and similar from
 `Debug.Trace` your code will fail to compile.
@@ -65,10 +65,10 @@ and two light.
 
 To make a move a player places a disc with their colour facing up on an 
 unoccupied square on the board such that it will capture at least one
-of the opponents discs.
+of the opponent's discs.
 
 Capturing occurs if the placed disc forms a line (horizontal, vertical
-or diagonal) that has one or more of the opponents discs on it and is
+or diagonal) that has one or more of the opponent's discs on it and is
 ended by another of the current player's discs, with none of the current
 player's discs in-between. All of the opponents
 discs on this line are flipped over, becoming the current player's discs.
@@ -94,7 +94,7 @@ read the documentation and try using it yourself inside GHCi.
 ### The framework
 
 The framework consists of several files, many of which are of little
-interest to you. In particular anything in the file `Main.hs` can be
+interest to you. In particular, anything in the file `Main.hs` can be
 ignored, as well as anything in the folder `Dragons`.
 (On medieval maps they drew pictures of dragons or sea monsters on
 uncharted areas, and the code contained in these files is
@@ -119,7 +119,7 @@ checking if a move is legal or not, getting the score for a given
 `Player` or actually playing a move.
 
 The final file you need to care about (and arguably the most important
-file) is `AI.hs`. Currently it's fairly empty, containing only three
+file) is `AI.hs`. Currently, it's fairly empty, containing only three
 things. A list of `AI`s with only a single entry, and a single
 unimplemented `AI` which is split into two functions, `makeBestMove`
 and `makeAMove`. To start off with, you can ignore `makeBestMove` and
@@ -149,7 +149,7 @@ ais = [("default", makeBestMove), ("helloWorld", makeFirstLegalMove)]
 
 Alright, we've now registered an AI called `"helloWorld"` which is
 defined by the function `makeFirstLegalMove`. Now we just need to define
-the `makeFirstLegalMove` function. For Othello we have an 8x8 board,
+the `makeFirstLegalMove` function. For Othello, we have an 8x8 board,
 and because we index from 0, a move is defined as pair `(row,col)` where
 both `row` and `col` are between 0 and 7 (inclusive). We can easily make
 a list of all possible moves using a list comprehension.
@@ -188,12 +188,12 @@ makeFirstLegalMove _ game = case legalMoves game of
 ```
 
 Under normal circumstances, an `AI` would return a list of increasingly
-better moves until time runs out. However no matter how long we look
+better moves until time runs out. However, no matter how long we look
 at it, the first legal move isn't going to change, so we just return
 a single move - the first one in our list of legal moves.
 
 Add that to your `AI.hs` file, save it, and try running the game again
-(`cabal run othello`). Hopefully you should now be able to play a full
+(`cabal run othello`). Hopefully, you should now be able to play a full
 game. If you want to play again just refresh the page.
 
 Now is a good time to commit and push your code.
@@ -208,7 +208,7 @@ git push
 Now that you've written your first bot, it's time to write an even
 better bot. But before you do that, you need to know how to play
 against it. `cabal run othello` runs the program with the default
-settings. That is, a human player playing against an AI called
+settings. That is a human player playing against an AI called
 `"helloWorld"`. To do something different than the default settings,
 you'll need to give the program arguments.
 Run `cabal run othello -- --help` and you should see something like
@@ -232,8 +232,7 @@ human players. You'd start the game with
 `cabal run othello -- --player1=HUMAN --player2=HUMAN`. Of course, since
 the default for player 1 is already human, you can omit that, and if you
 don't feel like typing so much, you can use the short option for
-player 2, giving you `cabal run othello -- -P HUMAN`. Or if for example
-you wanted to watch two of the `"helloWorld"` AIs face off, you can run
+player 2, giving you `cabal run othello -- -P HUMAN`. Or if for example, you wanted to watch two of the `"helloWorld"` AIs face off, you can run
 `cabal run othello -- --player1=helloWorld --player2=helloWorld`.
 
 The one exception to the "only modify `AI.hs` rule" is that you may
@@ -248,17 +247,16 @@ against itself. The final position should look like.
 ### Making a good move
 
 To make a good AI, we need to have a way of deciding what is, and what
-isn't a good move. A good place to start, is by trying to work out what
-are, and what aren't, good board positions. As you may have noticed,
+isn't a good move. A good place to start is by trying to work out what
+are, and what aren't good board positions. As you may have noticed,
 the score given in the game can move by quite a bit in a single turn,
-so by itself it may not be the best indicator of whether or not a
+so by itself, it may not be the best indicator of whether or not a
 board position is good.
 
 The first step on the way to success is writing what's known as a
-greedy bot. This is simply an AI, who looks at all possible next moves,
-and picks the move which will give it the best board position. Now if
+greedy bot. This is simply an AI, that looks at all possible next moves and picks the move which will give it the best board position. Now if
 we had a perfect function for rating board positions, we could stop
-here. Unfortunately Othello is not a solved game (yet).
+here. Unfortunately, Othello is not a solved game (yet).
 
 If you have a greedy bot working, now would be a good time to
 commit and push.
@@ -275,9 +273,9 @@ of the game you get, the more accurate it will be. If we're lucky
 it can also identify the difference between a position that's bad
 for us, and a position that's _really_ bad for us.
 
-So instead of looking just one turn into the future like a greedy bot
-would, we can try looking several turns into the future, both to
-increase the accuracy of our scoring function, and avoiding the common
+So instead of looking at just one turn into the future like a greedy bot
+would, we can try looking at several turns into the future, both to
+increase the accuracy of our scoring function and avoid the common
 pitfall that a greedy bot has of playing a move that seems really good,
 only for the opponent to have an even better move next turn.
 
@@ -289,15 +287,15 @@ that both you and your opponent are playing the best moves at each
 step.
 
 Here's a rough outline of how it works.
-1. Pick a depth that you're going to lookahead to.
+1. Pick a depth that you're going to look ahead to.
 2. Build out a game tree to the given depth for each possible move.
 3. Give each node a score, for a leaf node it's the score that
     your scoring function gives the board, and for
-    an inner node its value is either the maximum (if it's our
+    an inner node, its value is either the maximum (if it's our
     turn in the game at the current node) or the minimum (if it's our
     opponent's turn in the game at the current node) of the value
     of its children.
-4. Pick the move which has the game tree who's root node has the
+4. Pick the move which has the game tree whose root node has the
     highest score.
 
 When you write an AI, you'll probably call this function several times
@@ -317,8 +315,7 @@ is known as
 Once you've gotten a bot with Minimax with Alpha-Beta pruning, there's
 still room for improvement.
 - Try and sort your moves for Alpha Beta pruning to have a better
-    move ordering, since Alpha Beta pruning works best if
-    looks at the best moves first.
+    move ordering, since Alpha Beta pruning works best if look at the best moves first.
 - There are algorithms such as Negascout or
 MTD(f) which attempt to improve on Alpha-Beta pruning.
 - If most of your time is spent calculating new boards, because the
@@ -331,7 +328,7 @@ MTD(f) which attempt to improve on Alpha-Beta pruning.
 ### Code (70%)
 
 You're required to submit an AI which can play Othello called
-`"default`". (i.e if I call
+`"default`". (i.e. if I call
 `cabal run othello -- -p "default" -P "default"` I should be able to
 watch it play against itself.)
 
@@ -341,8 +338,7 @@ particular, but it should be more advanced than a greedy bot.
 
 The only file which will be looked at is your `AI.hs` file. It must be
 able to work without modification with the initial assignment framework.
-If it doesn't this will be treated the same as having non-compiling
-code.
+If it doesn't this will be treated the same as having a non-compiling code.
 
 ### Report (30%)
 
@@ -353,7 +349,7 @@ you could make. It **must be no longer than 1500 words**.
 
 Your report must be in PDF format, located at the root of your assignment
 repository (the folder with `othello.cabal`, not in the `src` folder) on GitLab
-and named `Report.pdf`. Otherwise it may not be marked.
+and named `Report.pdf`. Otherwise, it may not be marked.
 
 The report must have a **title page** with the following items:
 
@@ -387,13 +383,13 @@ These are only suggestions, you don't need to answer all of them.
 - What would you have done differently if you were to do it again?
 - How would you make your AI better?
 - How did you test your code?
-- Which parts of your code might be confusing for the reader? Explain them if so.
+- Which parts of your code might be confusing for the reader? Explain to them if so.
 
 Aside from what should be in your report, here are some things that should 
 definitely not be in it:
 
 - Any content that is not your own.
-- Grammatical errors or misspellings. Proof-read it before submission.
+- Grammatical errors or misspellings. Proofread it before submission.
 - Informal language. This includes unnecessary abbreviations 
     (atm, btw, ps, and so on), emojis, and emoticons. Keep in mind that 
     this is a professional document.
@@ -412,24 +408,22 @@ Once again, and we cannot stress this enough: do not post your code publicly.
 If you need help with your code, post it privately to the instructors.
 
 When brainstorming with your friends, do not show your code to them. There
-might be some pressure from your friends and even some judgements that you are
+might be some pressure from your friends and even some judgments that you are
 not sharing the code, but it is for both your and their benefit.
 
 _Anything that smells of plagiarism will be dealt with seriously and there may
 be serious consequences._
 
-Sharing ideas is perfectly fine, but sharing should stop at ideas. In
-particular for this assignment you may wish to discuss board evaluation
+Sharing ideas is perfectly fine, but sharing should stop at ideas. In particular, for this assignment, you may wish to discuss board evaluation
 heuristics. You may do so, but under no circumstances give anyone else
-your code for scoring a board.
+your code for the scoring board.
 
-Course staff will not look at assignment code unless it is posted privately
-in piazza.
+Course staff will not look at the assignment code unless it is posted privately in Piazza.
 
-Course staff will typically give assistance by directing you to relevant 
+Course staff will typically assist by directing you to relevant 
 exercises from the labs, or definitions and examples from the lectures.
 
-Before the assignment is due, course staff will not give individual tips on
+Before the assignment is due, the course staff will not give individual tips on
 writing functions for the assignment or how your code can be improved. You 
 will receive their feedback when the mark is released.
 
@@ -453,13 +447,13 @@ long.**
 ## Marking
 
 The marking is divided roughly into 70% for the code and 30% for the report.
-For exceptional reports or exceptional code we might take the liberty to shift
+For exceptional reports or exceptional code, we might take the liberty to shift
 those percentages slightly to acknowledge extra efforts.
 
 Marks in the code will be awarded for functionality, clarity, and how 
 effectively it can play Othello.
 
-Marks in the report will be awarded to concise writing, completeness of the
+Marks in the report will be awarded for concise writing, completeness of the
 report, and your understanding of your own designs and findings.
 
 Here is a breakdown of example student cases with different marks awarded:
@@ -472,7 +466,7 @@ Here is a breakdown of example student cases with different marks awarded:
 |High Distinction|Code compiles and the AI can reliably beat a minimax AI with an above average heuristic and pruning. The report is excellently written and explains in detail which additional measures have been taken and how they have been implemented.|
 
 Roughly, you can expect to reach a distinction level mark with an excellent 
-submission of a minimax based solution with a strong heuristic, or a
+submission of a minimax-based solution with a strong heuristic, or a
 minimax solution with pruning and a weak heuristic.
 
 ## Final Words
