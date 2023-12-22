@@ -1,8 +1,8 @@
-#Australian National University
-#Othello
+This is an Assignment from the Australian National University
 
 Table of Contents
 
+  * [Running and Installation instructions](#running-and-installation-instructions)
   * [Before you begin](#before-you-begin)
   * [The task](#the-task)
     * [Rules](#rules)
@@ -23,7 +23,7 @@ Table of Contents
   * [Marking](#marking)
   * [Final Words](#final-words)
 
-## Installation instructions
+## Running and Installation instructions
 ```sh
 curl -sSL https://get.haskellstack.org/ | sh    
 echo 'export PATH="$PATH:/path-to-stack"' >> ~/.zshrc  
